@@ -276,9 +276,9 @@ void CFE_TIME_CDC_GetBodyMaximums(const CFE_TIME_CDC_Clock_t *clock, int bodyMax
 /*----------------------------------------------------------------
  * CFE_TIME_CDC_GetTimeMilitary
  *
- * Format: "H:D1D2:D3D4" where H is unpadded hours and D1–D4 are
- * the individual minute/second digit fields concatenated in pairs,
- * e.g. "14:3059" for 14 h, 30 min, 59 sec.
+ * Format: "H:MM:SS" where H is unpadded hours and MM, SS are the
+ * individual minute/second digit fields concatenated in pairs,
+ * e.g. "14:30:59" for 14 h, 30 min, 59 sec.
  *----------------------------------------------------------------*/
 void CFE_TIME_CDC_GetTimeMilitary(const CFE_TIME_CDC_Clock_t *clock, char *buf, int bufLen)
 {
@@ -347,7 +347,7 @@ void CFE_TIME_CDC_GetMeridiemIndicator(const CFE_TIME_CDC_Clock_t *clock, char *
 /*----------------------------------------------------------------
  * CFE_TIME_CDC_GetTime
  *
- * Format: "H:D1D2:D3D4 XM", e.g. "7:3059 PM".
+ * Format: "H:MM:SS XM", e.g. "7:30:59 PM".
  * Mirrors C++ getTime().
  *----------------------------------------------------------------*/
 void CFE_TIME_CDC_GetTime(const CFE_TIME_CDC_Clock_t *clock, char *buf, int bufLen)

@@ -242,8 +242,8 @@ void CFE_TIME_CDC_GetBodyMaximums(const CFE_TIME_CDC_Clock_t *clock, int bodyMax
 /**
  * @brief Format the current time as a military (24-hour) string.
  *
- * Output format: "H:MMSS" where H is unpadded hours and MM, SS are the
- * concatenated digit pairs, e.g. "14:3059".  Caller must supply a buffer
+ * Output format: "H:MM:SS" where H is unpadded hours and MM, SS are the
+ * concatenated digit pairs, e.g. "14:30:59".  Caller must supply a buffer
  * of at least CFE_TIME_CDC_TIME_STR_LEN bytes.
  *
  * @param clock   Pointer to clock struct.
@@ -272,7 +272,7 @@ void CFE_TIME_CDC_GetMeridiemIndicator(const CFE_TIME_CDC_Clock_t *clock, char *
 /**
  * @brief Format the current time as a standard (12-hour AM/PM) string.
  *
- * Output format: "H:MMSS XM", e.g. "7:3059 PM".  Caller must supply a
+ * Output format: "H:MM:SS XM", e.g. "7:30:59 PM".  Caller must supply a
  * buffer of at least CFE_TIME_CDC_TIME_STR_LEN bytes.
  *
  * @param clock   Pointer to clock struct.
