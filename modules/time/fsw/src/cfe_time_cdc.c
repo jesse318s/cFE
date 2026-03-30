@@ -282,6 +282,9 @@ void CFE_TIME_CDC_GetBodyMaximums(const CFE_TIME_CDC_Clock_t *clock, int bodyMax
  *----------------------------------------------------------------*/
 void CFE_TIME_CDC_GetTimeMilitary(const CFE_TIME_CDC_Clock_t *clock, char *buf, int bufLen)
 {
+    if (buf == NULL || bufLen <= 0)
+        return;
+
     snprintf(buf, (size_t)bufLen, "%d%c%d%d%c%d%d",
              clock->hours,
              CFE_TIME_CDC_DELIMITER,
@@ -325,6 +328,9 @@ int CFE_TIME_CDC_GetStandardHours(const CFE_TIME_CDC_Clock_t *clock)
  *----------------------------------------------------------------*/
 void CFE_TIME_CDC_GetMeridiemIndicator(const CFE_TIME_CDC_Clock_t *clock, char *buf, int bufLen)
 {
+    if (buf == NULL || bufLen <= 0)
+        return;
+
     /* Post-meridiem: exact-hour boundary, second half (excluding midnight) */
     if (clock->maxMinutes == 0 &&
         clock->hours >= clock->maxHours / 2 &&
@@ -354,6 +360,9 @@ void CFE_TIME_CDC_GetTime(const CFE_TIME_CDC_Clock_t *clock, char *buf, int bufL
 {
     /* 4 bytes: space + letter + 'M' + NUL */
     char meridiemBuf[4];
+
+    if (buf == NULL || bufLen <= 0)
+        return;
 
     CFE_TIME_CDC_GetMeridiemIndicator(clock, meridiemBuf, (int)sizeof(meridiemBuf));
 
