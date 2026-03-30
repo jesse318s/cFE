@@ -56,7 +56,7 @@ const CFE_TIME_CDC_PlanetDay_t CFE_TIME_CDC_PlanetDayLengths[CFE_TIME_CDC_PLANET
 **
 ** This mirrors the constexpr in setBodyMaximums and caps the normalized
 ** half-day minutes to the highest value representable by one tens digit
-** (0–5) and one units digit (0–9) in sexagesimal notation, minus one.
+** (0-5) and one units digit (0-9) in sexagesimal notation, minus one.
 */
 static const int CFE_TIME_CDC_HALF_MAX_BODY_MINUTES =
     (CFE_TIME_CDC_RADIX_MAX / 2 * CFE_TIME_CDC_SECONDARY_RADIX + CFE_TIME_CDC_SECONDARY_RADIX_MAX) - 1;
@@ -408,7 +408,7 @@ bool CFE_TIME_CDC_CheckTimeReset(CFE_TIME_CDC_Clock_t *clock)
 
     bool isReset = false;
 
-    /* Case 1: no fractional minutes — reset everything to zero on hour overflow */
+    /* Case 1: no fractional minutes -- reset everything to zero on hour overflow */
     if (clock->maxMinutes == 0 && areHoursMax && areSecondsMax)
     {
         clock->hours         = 0;
@@ -419,7 +419,7 @@ bool CFE_TIME_CDC_CheckTimeReset(CFE_TIME_CDC_Clock_t *clock)
         isReset = true;
     }
 
-    /* Case 2: fractional minutes present — reset at the half-day or full-day
+    /* Case 2: fractional minutes present -- reset at the half-day or full-day
        minutes boundary; advance to the post-meridiem start if at mid-day */
     if (clock->maxMinutes != 0 && areMinutesMax && areSecondsMax)
     {
@@ -440,7 +440,7 @@ bool CFE_TIME_CDC_CheckTimeReset(CFE_TIME_CDC_Clock_t *clock)
  * CFE_TIME_CDC_Tick
  *
  * Advance the clock by one second, carrying through the digit
- * fields in the order: secondsDigit2 → secondsDigit1 → minutes.
+ * fields in the order: secondsDigit2 -> secondsDigit1 -> minutes.
  * Mirrors C++ tick().
  *----------------------------------------------------------------*/
 void CFE_TIME_CDC_Tick(CFE_TIME_CDC_Clock_t *clock)

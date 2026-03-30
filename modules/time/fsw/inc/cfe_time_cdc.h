@@ -32,10 +32,10 @@
 ** Constants
 */
 
-/** Tens-digit radix for minutes and seconds fields (range 0–5) */
+/** Tens-digit radix for minutes and seconds fields (range 0-5) */
 #define CFE_TIME_CDC_RADIX               6
 
-/** Units-digit radix for minutes and seconds fields (range 0–9) */
+/** Units-digit radix for minutes and seconds fields (range 0-9) */
 #define CFE_TIME_CDC_SECONDARY_RADIX     10
 
 /** Maximum value of the tens digit (radix - 1) */
@@ -82,10 +82,10 @@ typedef struct
     int maxHours;       /**< Normalized internal maximum hours */
     int maxMinutes;     /**< Normalized internal maximum minutes */
     int hours;          /**< Current hour field */
-    int minutesDigit1;  /**< Tens digit of current minutes (0–5) */
-    int minutesDigit2;  /**< Units digit of current minutes (0–9) */
-    int secondsDigit1;  /**< Tens digit of current seconds (0–5) */
-    int secondsDigit2;  /**< Units digit of current seconds (0–9) */
+    int minutesDigit1;  /**< Tens digit of current minutes (0-5) */
+    int minutesDigit2;  /**< Units digit of current minutes (0-9) */
+    int secondsDigit1;  /**< Tens digit of current seconds (0-5) */
+    int secondsDigit2;  /**< Units digit of current seconds (0-9) */
 } CFE_TIME_CDC_Clock_t;
 
 /**
@@ -111,7 +111,7 @@ typedef enum
     CFE_TIME_CDC_SATURN,
     CFE_TIME_CDC_URANUS,
     CFE_TIME_CDC_NEPTUNE,
-    CFE_TIME_CDC_PLANET_COUNT /**< Sentinel — number of entries in the table */
+    CFE_TIME_CDC_PLANET_COUNT /**< Sentinel -- number of entries in the table */
 } CFE_TIME_CDC_Planet_t;
 
 /**
@@ -310,7 +310,7 @@ bool CFE_TIME_CDC_CheckTimeReset(CFE_TIME_CDC_Clock_t *clock);
 /**
  * @brief Advance the clock by one second.
  *
- * Carries from secondsDigit2 → secondsDigit1 → minutes → hours,
+ * Carries from secondsDigit2 -> secondsDigit1 -> minutes -> hours,
  * and calls CFE_TIME_CDC_CheckTimeReset before incrementing.
  *
  * @param clock  Pointer to clock struct.
