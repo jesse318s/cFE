@@ -9,6 +9,7 @@ project(CFE_TIME C)
 # Time Services source files
 set(time_SOURCES
     fsw/src/cfe_time_api.c
+    fsw/src/cfe_time_cdc.c
     fsw/src/cfe_time_task.c
     fsw/src/cfe_time_tone.c
     fsw/src/cfe_time_utils.c
