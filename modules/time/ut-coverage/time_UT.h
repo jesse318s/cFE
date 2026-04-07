@@ -349,4 +349,12 @@ void Test_UnregisterSynchCallback(void);
 ******************************************************************************/
 void Test_CleanUpApp(void);
 
+/* Celestial Day Clock (CDC) unit tests */
+void Test_CDC_InitAndBodyMaximums(void);
+void Test_CDC_GettersSetters(void);
+void Test_CDC_TickCarry(void);
+void Test_CDC_ResetNoMinutes(void);
+void Test_CDC_ResetWithMinutes(void);
+void Test_CDC_Formatting(void);
+
 #endif /* TIME_UT_H */
