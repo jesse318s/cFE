@@ -253,10 +253,14 @@ void CFE_TIME_CDC_GetBodyMaximums(const CFE_TIME_CDC_Clock_t *clock, int bodyMax
 void CFE_TIME_CDC_GetTimeMilitary(const CFE_TIME_CDC_Clock_t *clock, char *buf, int bufLen);
 
 /**
- * @brief Compute the standard (12-hour) equivalent of the current hours field.
+ * @brief Compute the AM/PM-equivalent hours value relative to the CDC half-day.
+ *
+ * Returns the hours field mapped to the first half of the planet day, which
+ * is used to build the standard (AM/PM) time string.  The returned value may
+ * exceed 12 for bodies with day lengths longer than 24 Earth hours.
  *
  * @param clock  Pointer to clock struct.
- * @return Standard hours value.
+ * @return Hours value relative to the current half-day.
  */
 int CFE_TIME_CDC_GetStandardHours(const CFE_TIME_CDC_Clock_t *clock);
 
@@ -270,10 +274,11 @@ int CFE_TIME_CDC_GetStandardHours(const CFE_TIME_CDC_Clock_t *clock);
 void CFE_TIME_CDC_GetMeridiemIndicator(const CFE_TIME_CDC_Clock_t *clock, char *buf, int bufLen);
 
 /**
- * @brief Format the current time as a standard (12-hour AM/PM) string.
+ * @brief Format the current time as an AM/PM-formatted string.
  *
- * Output format: "H:MM:SS XM", e.g. "7:30:59 PM".  Caller must supply a
- * buffer of at least CFE_TIME_CDC_TIME_STR_LEN bytes.
+ * Output format: "H:MM:SS XM", e.g. "7:30:59 PM".  The hour field reflects
+ * the planet's half-day and may exceed 12 for bodies with long day lengths.
+ * Caller must supply a buffer of at least CFE_TIME_CDC_TIME_STR_LEN bytes.
  *
  * @param clock   Pointer to clock struct.
  * @param buf     Caller-supplied output buffer.

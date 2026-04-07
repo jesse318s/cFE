@@ -103,6 +103,9 @@ static void CFE_TIME_CDC_TickMinutes(CFE_TIME_CDC_Clock_t *clock)
  *----------------------------------------------------------------*/
 void CFE_TIME_CDC_Init(CFE_TIME_CDC_Clock_t *clock, int h, int m)
 {
+    if (clock == NULL)
+        return;
+
     clock->maxHours      = 0;
     clock->maxMinutes    = 0;
     clock->hours         = 0;
@@ -119,6 +122,9 @@ void CFE_TIME_CDC_Init(CFE_TIME_CDC_Clock_t *clock, int h, int m)
  *----------------------------------------------------------------*/
 void CFE_TIME_CDC_SetHours(CFE_TIME_CDC_Clock_t *clock, int h)
 {
+    if (clock == NULL)
+        return;
+
     clock->hours = CFE_TIME_CDC_Clamp(h, clock->maxHours);
 }
 
@@ -127,6 +133,9 @@ void CFE_TIME_CDC_SetHours(CFE_TIME_CDC_Clock_t *clock, int h)
  *----------------------------------------------------------------*/
 int CFE_TIME_CDC_GetHours(const CFE_TIME_CDC_Clock_t *clock)
 {
+    if (clock == NULL)
+        return 0;
+
     return clock->hours;
 }
 
@@ -135,6 +144,9 @@ int CFE_TIME_CDC_GetHours(const CFE_TIME_CDC_Clock_t *clock)
  *----------------------------------------------------------------*/
 void CFE_TIME_CDC_SetMinutesDigit1(CFE_TIME_CDC_Clock_t *clock, int m)
 {
+    if (clock == NULL)
+        return;
+
     clock->minutesDigit1 = CFE_TIME_CDC_Clamp(m, CFE_TIME_CDC_RADIX_MAX);
 }
 
@@ -143,6 +155,9 @@ void CFE_TIME_CDC_SetMinutesDigit1(CFE_TIME_CDC_Clock_t *clock, int m)
  *----------------------------------------------------------------*/
 int CFE_TIME_CDC_GetMinutesDigit1(const CFE_TIME_CDC_Clock_t *clock)
 {
+    if (clock == NULL)
+        return 0;
+
     return clock->minutesDigit1;
 }
 
@@ -151,6 +166,9 @@ int CFE_TIME_CDC_GetMinutesDigit1(const CFE_TIME_CDC_Clock_t *clock)
  *----------------------------------------------------------------*/
 void CFE_TIME_CDC_SetMinutesDigit2(CFE_TIME_CDC_Clock_t *clock, int m)
 {
+    if (clock == NULL)
+        return;
+
     clock->minutesDigit2 = CFE_TIME_CDC_Clamp(m, CFE_TIME_CDC_SECONDARY_RADIX_MAX);
 }
 
@@ -159,6 +177,9 @@ void CFE_TIME_CDC_SetMinutesDigit2(CFE_TIME_CDC_Clock_t *clock, int m)
  *----------------------------------------------------------------*/
 int CFE_TIME_CDC_GetMinutesDigit2(const CFE_TIME_CDC_Clock_t *clock)
 {
+    if (clock == NULL)
+        return 0;
+
     return clock->minutesDigit2;
 }
 
@@ -167,6 +188,9 @@ int CFE_TIME_CDC_GetMinutesDigit2(const CFE_TIME_CDC_Clock_t *clock)
  *----------------------------------------------------------------*/
 void CFE_TIME_CDC_SetSecondsDigit1(CFE_TIME_CDC_Clock_t *clock, int s)
 {
+    if (clock == NULL)
+        return;
+
     clock->secondsDigit1 = CFE_TIME_CDC_Clamp(s, CFE_TIME_CDC_RADIX_MAX);
 }
 
@@ -175,6 +199,9 @@ void CFE_TIME_CDC_SetSecondsDigit1(CFE_TIME_CDC_Clock_t *clock, int s)
  *----------------------------------------------------------------*/
 int CFE_TIME_CDC_GetSecondsDigit1(const CFE_TIME_CDC_Clock_t *clock)
 {
+    if (clock == NULL)
+        return 0;
+
     return clock->secondsDigit1;
 }
 
@@ -183,6 +210,9 @@ int CFE_TIME_CDC_GetSecondsDigit1(const CFE_TIME_CDC_Clock_t *clock)
  *----------------------------------------------------------------*/
 void CFE_TIME_CDC_SetSecondsDigit2(CFE_TIME_CDC_Clock_t *clock, int s)
 {
+    if (clock == NULL)
+        return;
+
     clock->secondsDigit2 = CFE_TIME_CDC_Clamp(s, CFE_TIME_CDC_SECONDARY_RADIX_MAX);
 }
 
@@ -191,6 +221,9 @@ void CFE_TIME_CDC_SetSecondsDigit2(CFE_TIME_CDC_Clock_t *clock, int s)
  *----------------------------------------------------------------*/
 int CFE_TIME_CDC_GetSecondsDigit2(const CFE_TIME_CDC_Clock_t *clock)
 {
+    if (clock == NULL)
+        return 0;
+
     return clock->secondsDigit2;
 }
 
@@ -210,6 +243,9 @@ int CFE_TIME_CDC_GetSecondsDigit2(const CFE_TIME_CDC_Clock_t *clock)
  *----------------------------------------------------------------*/
 void CFE_TIME_CDC_SetBodyMaximums(CFE_TIME_CDC_Clock_t *clock, int h, int m)
 {
+    if (clock == NULL)
+        return;
+
     if (h < CFE_TIME_CDC_MAX_HOURS_MIN)
         h = CFE_TIME_CDC_MAX_HOURS_MIN;
 
@@ -250,6 +286,9 @@ void CFE_TIME_CDC_SetBodyMaximums(CFE_TIME_CDC_Clock_t *clock, int h, int m)
  *----------------------------------------------------------------*/
 void CFE_TIME_CDC_GetBodyMaximums(const CFE_TIME_CDC_Clock_t *clock, int bodyMaximums[2])
 {
+    if (clock == NULL || bodyMaximums == NULL)
+        return;
+
     /* A truly odd maxHours occurs only when maxMinutes absorbed the extra
        half-hour (i.e. maxMinutes >= radix * secondaryRadix / 2 = 30). */
     const bool hasTrulyOddMaxHours = (clock->maxHours % 2 == 1) &&
@@ -301,6 +340,9 @@ void CFE_TIME_CDC_GetTimeMilitary(const CFE_TIME_CDC_Clock_t *clock, char *buf, 
  *----------------------------------------------------------------*/
 int CFE_TIME_CDC_GetStandardHours(const CFE_TIME_CDC_Clock_t *clock)
 {
+    if (clock == NULL)
+        return 0;
+
     /* Midnight on an exact-hour boundary: display the half-day maximum */
     if (clock->maxMinutes == 0 && clock->hours == 0)
         return clock->maxHours / 2;
@@ -328,7 +370,7 @@ int CFE_TIME_CDC_GetStandardHours(const CFE_TIME_CDC_Clock_t *clock)
  *----------------------------------------------------------------*/
 void CFE_TIME_CDC_GetMeridiemIndicator(const CFE_TIME_CDC_Clock_t *clock, char *buf, int bufLen)
 {
-    if (buf == NULL || bufLen <= 0)
+    if (clock == NULL || buf == NULL || bufLen <= 0)
         return;
 
     /* Post-meridiem: exact-hour boundary, second half (excluding midnight) */
@@ -336,18 +378,18 @@ void CFE_TIME_CDC_GetMeridiemIndicator(const CFE_TIME_CDC_Clock_t *clock, char *
         clock->hours >= clock->maxHours / 2 &&
         clock->hours != clock->maxHours)
     {
-        snprintf(buf, (size_t)bufLen, " %cM", CFE_TIME_CDC_POST_CHAR);
+        snprintf(buf, (size_t)bufLen, " %c%c", CFE_TIME_CDC_POST_CHAR, CFE_TIME_CDC_MERIDIEM_CHAR);
         return;
     }
 
     /* Post-meridiem: fractional-minute boundary, strictly past the midpoint */
     if (clock->maxMinutes != 0 && clock->hours > clock->maxHours / 2)
     {
-        snprintf(buf, (size_t)bufLen, " %cM", CFE_TIME_CDC_POST_CHAR);
+        snprintf(buf, (size_t)bufLen, " %c%c", CFE_TIME_CDC_POST_CHAR, CFE_TIME_CDC_MERIDIEM_CHAR);
         return;
     }
 
-    snprintf(buf, (size_t)bufLen, " %cM", CFE_TIME_CDC_ANTE_CHAR);
+    snprintf(buf, (size_t)bufLen, " %c%c", CFE_TIME_CDC_ANTE_CHAR, CFE_TIME_CDC_MERIDIEM_CHAR);
 }
 
 /*----------------------------------------------------------------
@@ -400,6 +442,9 @@ void CFE_TIME_CDC_GetTimes(const CFE_TIME_CDC_Clock_t *clock,
  *----------------------------------------------------------------*/
 bool CFE_TIME_CDC_CheckTimeReset(CFE_TIME_CDC_Clock_t *clock)
 {
+    if (clock == NULL)
+        return false;
+
     /* All hours and all minutes are at their ceiling values */
     const bool areHoursMax = (clock->hours >= clock->maxHours - 1) &&
                              (clock->minutesDigit1 == CFE_TIME_CDC_RADIX_MAX) &&
@@ -454,6 +499,9 @@ bool CFE_TIME_CDC_CheckTimeReset(CFE_TIME_CDC_Clock_t *clock)
  *----------------------------------------------------------------*/
 void CFE_TIME_CDC_Tick(CFE_TIME_CDC_Clock_t *clock)
 {
+    if (clock == NULL)
+        return;
+
     if (CFE_TIME_CDC_CheckTimeReset(clock))
         return;
 

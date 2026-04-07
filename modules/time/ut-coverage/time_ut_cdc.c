@@ -385,4 +385,38 @@ void Test_CDC_Formatting(void)
     UtAssert_VOIDCALL(CFE_TIME_CDC_GetTimeMilitary(&clock, milBuf, 0));
     UtAssert_VOIDCALL(CFE_TIME_CDC_GetTime(&clock, stdBuf, 0));
     UtAssert_VOIDCALL(CFE_TIME_CDC_GetMeridiemIndicator(&clock, stdBuf, 0));
+
+    /*
+     * --- Fractional-minute body (maxMinutes != 0) ---
+     *
+     * Earth (23h 56m): after normalization maxHours = 23, maxMinutes = 58.
+     * Half-day index = maxHours / 2 = 11.
+     * At hours = 14 (> 11), GetStandardHours takes the fractional-minute
+     * branch: 14 - 11 - 1 = 2.  GetMeridiemIndicator takes its
+     * maxMinutes != 0 PM branch.
+     *
+     * This exercises different code paths in both helpers compared to the
+     * maxMinutes == 0 tests above.
+     */
+    CFE_TIME_CDC_Init(&clock,
+                      CFE_TIME_CDC_PlanetDayLengths[CFE_TIME_CDC_EARTH].hours,
+                      CFE_TIME_CDC_PlanetDayLengths[CFE_TIME_CDC_EARTH].minutes);
+    CFE_TIME_CDC_SetHours(&clock, 14);
+    CFE_TIME_CDC_SetMinutesDigit1(&clock, 3);
+    CFE_TIME_CDC_SetMinutesDigit2(&clock, 0);
+    CFE_TIME_CDC_SetSecondsDigit1(&clock, 5);
+    CFE_TIME_CDC_SetSecondsDigit2(&clock, 9);
+
+    /* PM case (hours > maxHours/2 = 11): standard hours = 14 - 11 - 1 = 2 */
+    CFE_TIME_CDC_GetTimes(&clock, milBuf, (int)sizeof(milBuf), stdBuf, (int)sizeof(stdBuf));
+    strcpy(expectedMil, "14:30:59");
+    strcpy(expectedStd, "2:30:59 PM");
+    UtAssert_STRINGBUF_EQ(milBuf, sizeof(milBuf), expectedMil, sizeof(expectedMil));
+    UtAssert_STRINGBUF_EQ(stdBuf, sizeof(stdBuf), expectedStd, sizeof(expectedStd));
+
+    /* AM case (hours <= maxHours/2 = 11): GetMeridiemIndicator ante-meridiem branch */
+    CFE_TIME_CDC_SetHours(&clock, 8);
+    CFE_TIME_CDC_GetTime(&clock, stdBuf, (int)sizeof(stdBuf));
+    strcpy(expectedStd, "8:30:59 AM");
+    UtAssert_STRINGBUF_EQ(stdBuf, sizeof(stdBuf), expectedStd, sizeof(expectedStd));
 }
