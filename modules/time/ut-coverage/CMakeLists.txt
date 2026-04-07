@@ -7,6 +7,7 @@
 set(TESTCASE_SOURCES 
     "time_ut_helpers.c" # Useful helper functions for everything 
     "time_UT.c"         # The traditional "time_UT.c" has most of the test cases
+    "time_ut_cdc.c"     # Celestial Day Clock (CDC) unit tests
 )
 
 # The final bit of support/helper code varies depending on whether EDS is enabled

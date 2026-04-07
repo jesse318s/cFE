@@ -81,6 +81,12 @@ void UtTest_Setup(void)
     UT_ADD_TEST(Test_1Hz);
     UT_ADD_TEST(Test_UnregisterSynchCallback);
     UT_ADD_TEST(Test_CleanUpApp);
+    UT_ADD_TEST(Test_CDC_InitAndBodyMaximums);
+    UT_ADD_TEST(Test_CDC_GettersSetters);
+    UT_ADD_TEST(Test_CDC_TickCarry);
+    UT_ADD_TEST(Test_CDC_ResetNoMinutes);
+    UT_ADD_TEST(Test_CDC_ResetWithMinutes);
+    UT_ADD_TEST(Test_CDC_Formatting);
 }
 
 /*
